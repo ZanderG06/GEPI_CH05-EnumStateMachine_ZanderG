@@ -11,6 +11,8 @@ public enum GameState
 
 public class GameStateManager : MonoBehaviour
 {
+    public UIManager uiManager;
+    
     public GameState currentState { get; private set; }
     public GameState previousState { get; private set; }
 
@@ -21,6 +23,8 @@ public class GameStateManager : MonoBehaviour
     private void Start()
     {
         SetState(GameState.Init);
+
+        uiManager = ServiceHub.Instance.uiManager;
     }
 
     public void SetState(GameState newState)

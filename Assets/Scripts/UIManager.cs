@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject gameplayUI;
+    [SerializeField] private GameObject pausedUI;
 
-    // Update is called once per frame
-    void Update()
+    public void HideAllUI()
     {
+        mainMenuUI.SetActive(false);
+        gameplayUI.SetActive(false);
+        pausedUI.SetActive(false);
+    }
+    
+    public void ShowMainMenu()
+    {
+        HideAllUI();
         
+        mainMenuUI.SetActive(true);
     }
 }
