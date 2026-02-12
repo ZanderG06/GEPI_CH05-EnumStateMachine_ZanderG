@@ -5064,7 +5064,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 64943890}
         m_TargetAssemblyTypeName: GameStateManager, Assembly-CSharp
-        m_MethodName: GoToMainMenu
+        m_MethodName: GoToPrevious
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

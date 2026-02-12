@@ -119,4 +119,9 @@ public class GameStateManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void GoToPrevious()
+    {
+        SetState(previousState);
+    }
 }
