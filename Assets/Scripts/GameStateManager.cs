@@ -6,7 +6,9 @@ public enum GameState
     Init,
     MainMenu,
     Gameplay,
-    Paused
+    Paused,
+    Settings,
+    GameOver
 }
 
 public class GameStateManager : MonoBehaviour
@@ -23,12 +25,12 @@ public class GameStateManager : MonoBehaviour
     private void Start()
     {
         SetState(GameState.Init);
-
-        uiManager = ServiceHub.Instance.uiManager;
     }
 
     public void SetState(GameState newState)
     {
+        if(currentState == newState) return;
+
         previousState = currentState;
         currentState = newState;
 
@@ -40,6 +42,8 @@ public class GameStateManager : MonoBehaviour
 
     private void OnGameStateChanged(GameState previousState, GameState newState)
     {
+        Time.timeScale = 1f;
+        
         switch (newState)
         {
             case GameState.None:
@@ -53,18 +57,66 @@ public class GameStateManager : MonoBehaviour
             
             case GameState.MainMenu:
                 Debug.Log("GameState changed to MainMenu");
+                uiManager.ShowMainMenu();
                 break;
 
             case GameState.Gameplay:
                 Debug.Log("GameState changed to Gameplay");
+                uiManager.ShowGamePlay();
                 break;
 
             case GameState.Paused:
                 Debug.Log("GameState changed to Paused");
+                uiManager.ShowPaused();
+                Time.timeScale = 0f;
+                break;
+
+            case GameState.Settings:
+                Debug.Log("GameState changed to Settings");
+                uiManager.ShowSettings();
+                break;
+
+            case GameState.GameOver:
+                Debug.Log("GameState changed to GameOver");
+                uiManager.ShowGameOver();
                 break;
 
             default:
                 break;
         }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) TogglePause();
+
+        if (Input.GetKeyDown(KeyCode.Space)) SetState(GameState.GameOver);
+    }
+
+    public void TogglePause()
+    {
+        if(currentState == GameState.Paused) SetState(GameState.Gameplay);
+
+        else if(currentState == GameState.Gameplay) SetState(GameState.Paused);
+    }
+
+    public void GoToMainMenu()
+    {
+        SetState(GameState.MainMenu);
+    }
+
+    public void GoToGameplay()
+    {
+        SetState(GameState.Gameplay);
+    }
+
+    public void GoToSettings()
+    {
+        SetState(GameState.Settings);
+    }
+
+    public void OnQuit()
+    {
+        Application.Quit();
     }
 }
